@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Henrique Assis Moreira — Página Pessoal</title>
+
+        <!-- Tailwind CSS 4 (build para navegador) -->
+        <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+        <!-- Font Awesome (ícones) -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+        <!-- Tema do projeto: tokens de cor, breakpoints e tipografia -->
+        <style type="text/tailwindcss">
+            @theme {
+                --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif;
+
+                /* Mesmos pontos de quebra do grid do Bootstrap */
+                --breakpoint-sm: 576px;
+                --breakpoint-md: 768px;
+                --breakpoint-lg: 992px;
+                --breakpoint-xl: 1200px;
+                --breakpoint-2xl: 1400px;
+
+                /* Entrelinha padrão de 1.5 em todos os tamanhos de texto */
+                --text-xs: 0.75rem;
+                --text-xs--line-height: 1.5;
+                --text-sm: 0.875rem;
+                --text-sm--line-height: 1.5;
+                --text-base: 1rem;
+                --text-base--line-height: 1.5;
+                --text-xl: 1.25rem;
+                --text-xl--line-height: 1.5;
+                --text-2xl: 1.5rem;
+                --text-2xl--line-height: 1.5;
+
+                /* Tema claro */
+                --color-body: #ffffff;
+                --color-fg: #212529;
+                --color-muted: rgba(33, 37, 41, 0.75);
+                --color-surface: #ffffff;
+                --color-tertiary: #f8f9fa;
+                --color-track: #e9ecef;
+                --color-line: #dee2e6;
+                --color-card: rgba(0, 0, 0, 0.175);
+                --color-primary: #0d6efd;
+                --color-primary-hover: #0b5ed7;
+                --color-primary-active: #0a58ca;
+                --color-secondary: #6c757d;
+                --color-secondary-hover: #5c636a;
+                --color-light: #f8f9fa;
+                --color-link: #0d6efd;
+                --color-link-hover: #0a58ca;
+                --color-navbar: rgba(0, 0, 0, 0.65);
+                --color-navbar-hover: rgba(0, 0, 0, 0.8);
+                --color-navbar-brand: #000000;
+                --color-toggler: rgba(0, 0, 0, 0.15);
+
+                --shadow-bs: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+            }
+
+            /* Tema escuro: troca só os valores, as classes continuam as mesmas */
+            [data-theme="dark"] {
+                --color-body: #212529;
+                --color-fg: #dee2e6;
+                --color-muted: rgba(222, 226, 230, 0.75);
+                --color-surface: #212529;
+                --color-tertiary: #2b3035;
+                --color-track: #343a40;
+                --color-line: #495057;
+                --color-card: rgba(255, 255, 255, 0.15);
+                --color-link: #6ea8fe;
+                --color-link-hover: #8bb9fe;
+                --color-navbar: rgba(255, 255, 255, 0.65);
+                --color-navbar-hover: rgba(255, 255, 255, 0.8);
+                --color-navbar-brand: #ffffff;
+                --color-toggler: rgba(255, 255, 255, 0.15);
+            }
+        </style>
+
+        <!-- CSS do projeto (externo) -->
+        <link rel="stylesheet" href="assets/css/styles.css">
+    </head>
+    <body class="bg-body text-fg">
+        <!-- Navbar -->
+        <nav class="sticky top-0 z-[1020] flex flex-wrap items-center justify-between border-b border-line bg-body py-2 lg:flex-nowrap lg:justify-start">
+            <div class="mx-auto flex w-full flex-wrap items-center justify-between px-3 sm:max-w-[540px] md:max-w-[720px] lg:max-w-[960px] lg:flex-nowrap xl:max-w-[1140px] 2xl:max-w-[1320px]">
+                <a class="me-4 py-[0.3125rem] text-xl font-semibold whitespace-nowrap text-navbar-brand" href="#top">
+                    <i class="fa-solid fa-code me-2"></i>Henrique Moreira
+                </a>
+                <button id="navToggle" class="cursor-pointer rounded-md border border-toggler px-3 py-1 text-xl leading-none text-navbar lg:hidden" type="button" aria-controls="navContent" aria-expanded="false">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+                <div class="hidden grow basis-full items-center lg:flex lg:basis-auto" id="navContent">
+                    <ul class="ms-auto flex flex-col lg:flex-row lg:gap-1">
+                        <li><a class="block px-0 py-2 text-navbar hover:text-navbar-hover lg:px-2" href="#sobre">Sobre</a></li>
+                        <li><a class="block px-0 py-2 text-navbar hover:text-navbar-hover lg:px-2" href="#habilidades">Habilidades</a></li>
+                        <li><a class="block px-0 py-2 text-navbar hover:text-navbar-hover lg:px-2" href="#projetos">Projetos</a></li>
+                        <li><a class="block px-0 py-2 text-navbar hover:text-navbar-hover lg:px-2" href="#interesses">Interesses</a></li>
+                        <li><a class="block px-0 py-2 text-navbar hover:text-navbar-hover lg:px-2" href="#contato">Contato</a></li>
+                    </ul>
+                    <div class="flex items-center gap-2 py-2 lg:ms-4 lg:py-0">
+                        <span class="hidden text-sm text-muted lg:inline">Tema</span>
+                        <button id="themeToggle" class="inline-block cursor-pointer rounded-sm border border-secondary bg-transparent px-2 py-1 text-center align-middle text-sm font-normal text-secondary transition hover:bg-secondary hover:text-white" type="button">
+                            <i class="fa-solid fa-moon"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Header / Informações Básicas -->
+        <header id="top" class="py-12">
+            <div class="mx-auto w-full px-3 sm:max-w-[540px] md:max-w-[720px] lg:max-w-[960px] xl:max-w-[1140px] 2xl:max-w-[1320px]">
+                <div class="grid grid-cols-12 items-center gap-6">
+                    <div class="col-span-12 text-center lg:col-span-4">
+                        <img class="profile-img mx-auto shadow-bs" src="assets/img/foto.jpeg" alt="Foto de perfil">
+                        <div class="mt-4">
+                            <span class="me-1 inline-block rounded-md bg-primary px-[0.65em] py-[0.35em] text-center align-baseline text-[0.75em] leading-none font-bold whitespace-nowrap text-white">Ciência da Computação</span>
+                            <span class="inline-block rounded-md bg-secondary px-[0.65em] py-[0.35em] text-center align-baseline text-[0.75em] leading-none font-bold whitespace-nowrap text-white">8º Período</span>
+                        </div>
+                    </div>
+                    <div class="col-span-12 lg:col-span-8">
+                        <h1 class="mb-4 text-[calc(1.375rem+1.5vw)] leading-[1.2] font-semibold xl:text-[2.5rem]">
+                            Olá! Eu sou <span class="text-primary">Henrique Assis Moreira</span>
+                        </h1>
+                        <p class="mb-6 text-xl font-light text-muted">
+                            Estudante de Ciência da Computação no 8º período, interessado em programação para sistemas operacionais, baixo nível e paralelismo, além de desenvolvimento web e de jogos.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <a class="inline-block cursor-pointer rounded-md border border-primary bg-primary px-3 py-1.5 text-center align-middle font-normal text-white transition hover:border-primary-active hover:bg-primary-hover" href="#projetos">
+                                <i class="fa-solid fa-diagram-project me-2"></i>Ver projetos
+                            </a>
+                            <a class="inline-block cursor-pointer rounded-md border border-primary bg-transparent px-3 py-1.5 text-center align-middle font-normal text-primary transition hover:bg-primary hover:text-white" href="#contato">
+                                <i class="fa-solid fa-envelope me-2"></i>Contato
+                            </a>
+                            <a class="inline-block cursor-pointer rounded-md border border-secondary bg-transparent px-3 py-1.5 text-center align-middle font-normal text-secondary transition hover:bg-secondary hover:text-white" href="https://github.com/henrique117" target="_blank">
+                                <i class="fa-brands fa-github me-2"></i>GitHub
+                            </a>
+                            <a class="inline-block cursor-pointer rounded-md border border-secondary bg-transparent px-3 py-1.5 text-center align-middle font-normal text-secondary transition hover:bg-secondary hover:text-white" href="https://www.linkedin.com/in/henrique-moreira-274b8027b/" target="_blank">
+                                <i class="fa-brands fa-linkedin me-2"></i>LinkedIn
+                            </a>
+                        </div>
+                        <hr class="my-6 border-t opacity-25">
+                        <div class="grid grid-cols-12 gap-4">
+                            <div class="col-span-12 md:col-span-6">
+                                <div class="rounded-lg border border-line bg-tertiary p-4">
+                                    <div class="mb-2 flex items-center gap-2">
+                                        <i class="fa-solid fa-graduation-cap text-primary"></i>
+                                        <strong>Curso</strong>
+                                    </div>
+                                    <p class="mb-0 text-muted">
+                                        Bacharelado em Ciência da Computação, atualmente no 8º período.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-span-12 md:col-span-6">
+                                <div class="rounded-lg border border-line bg-tertiary p-4">
+                                    <div class="mb-2 flex items-center gap-2">
+                                        <i class="fa-solid fa-bullseye text-primary"></i>
+                                        <strong>Objetivo</strong>
+                                    </div>
+                                    <p class="mb-0 text-muted">
+                                        Me aprofundar em programação de baixo nível, sistemas operacionais e computação paralela, sem largar o desenvolvimento web e de jogos.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main class="pb-12">
+            <!-- Sobre -->
+            <section id="sobre" class="py-6">
+                <div class="mx-auto w-full px-3 sm:max-w-[540px] md:max-w-[720px] lg:max-w-[960px] xl:max-w-[1140px] 2xl:max-w-[1320px]">
+                    <div class="mb-4">
+                        <h2 class="mb-1 text-[calc(1.275rem+0.3vw)] leading-[1.2] font-medium xl:text-2xl">Sobre</h2>
+                        <p class="mb-0 text-muted">Uma breve descrição sobre mim e minha trajetória.</p>
+                    </div>
+                    <div class="grid grid-cols-12 gap-6">
+                        <div class="col-span-12 lg:col-span-7">
+                            <div class="relative flex min-w-0 flex-col rounded-md border border-card bg-surface break-words shadow-bs">
+                                <div class="flex-auto p-4">
+                                    <p class="mb-2">
+                                        Sou estudante de Ciência da Computação no 8º período. Gosto de entender o que acontece por baixo das abstrações: sistemas operacionais, programação de baixo nível e computação paralela são os assuntos que mais me interessam.
+                                    </p>
+                                    <p class="mb-0 text-muted">
+                                        Na prática, também trabalho bastante com desenvolvimento web e de jogos, que é onde coloco boa parte das minhas ideias de pé. Nesta página reúno minhas habilidades, interesses e projetos.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-span-12 lg:col-span-5">
+                            <div class="relative flex min-w-0 flex-col rounded-md border border-card bg-surface break-words shadow-bs">
+                                <div class="flex-auto p-4">
+                                    <h3 class="mb-4 text-base leading-[1.2] font-medium">Informações rápidas</h3>
+                                    <ul class="mb-0">
+                                        <li class="mb-2 flex gap-2">
+                                            <i class="fa-solid fa-hourglass-half mt-1 text-primary"></i>
+                                            <div><strong>Período:</strong> 8º de Ciência da Computação</div>
+                                        </li>
+                                        <li class="mb-2 flex items-start gap-2">
+                                            <i class="fa-solid fa-language mt-1 text-primary"></i>
+                                            <div><strong>Idiomas:</strong> Português e Inglês</div>
+                                        </li>
+                                        <li class="flex gap-2">
+                                            <i class="fa-solid fa-laptop-code mt-1 text-primary"></i>
+                                            <div><strong>Áreas:</strong> Sistemas Operacionais, Baixo Nível, Paralelismo e Web</div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Habilidades -->
+            <section id="habilidades" class="py-6">
+                <div class="mx-auto w-full px-3 sm:max-w-[540px] md:max-w-[720px] lg:max-w-[960px] xl:max-w-[1140px] 2xl:max-w-[1320px]">
+                    <div class="section-title">
+                        <h2 class="mb-1 text-[calc(1.275rem+0.3vw)] leading-[1.2] font-medium xl:text-2xl">Habilidades</h2>
+                        <p class="mb-0 text-muted">Tecnologias e competências.</p>
+                    </div>
+                    <div class="mt-1 grid grid-cols-12 gap-6">
+                        <div class="col-span-12 lg:col-span-6">
+                            <div class="relative flex h-full min-w-0 flex-col rounded-md border border-card bg-surface break-words shadow-bs">
+                                <div class="flex-auto p-4">
+                                    <h3 class="mb-2 text-base leading-[1.2] font-medium">Tecnologias</h3>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="inline-block rounded-full bg-primary px-[0.65em] py-[0.35em] text-center align-baseline text-[0.75em] leading-none font-bold whitespace-nowrap text-white">HTML</span>
+                                        <span class="inline-block rounded-full bg-primary px-[0.65em] py-[0.35em] text-center align-baseline text-[0.75em] leading-none font-bold whitespace-nowrap text-white">CSS</span>
+                                        <span class="inline-block rounded-full bg-primary px-[0.65em] py-[0.35em] text-center align-baseline text-[0.75em] leading-none font-bold whitespace-nowrap text-white">JavaScript</span>
+                                        <span class="inline-block rounded-full bg-secondary px-[0.65em] py-[0.35em] text-center align-baseline text-[0.75em] leading-none font-bold whitespace-nowrap text-white">TypeScript</span>
+                                        <span class="inline-block rounded-full bg-secondary px-[0.65em] py-[0.35em] text-center align-baseline text-[0.75em] leading-none font-bold whitespace-nowrap text-white">React</span>
+                                        <span class="inline-block rounded-full bg-secondary px-[0.65em] py-[0.35em] text-center align-baseline text-[0.75em] leading-none font-bold whitespace-nowrap text-white">C/C++</span>
+                                        <span class="inline-block rounded-full bg-secondary px-[0.65em] py-[0.35em] text-center align-baseline text-[0.75em] leading-none font-bold whitespace-nowrap text-white">Docker</span>
+                                    </div>
+                                    <hr class="my-4 border-t opacity-25">
+                                    <h3 class="mb-2 text-base leading-[1.2] font-medium">Competências</h3>
+                                    <ul class="mb-0 list-disc ps-8">
+                                        <li>Front-end com React: componentes, estado e páginas responsivas</li>
+                                        <li>Consumo e construção de APIs REST</li>
+                                        <li>Programação paralela em C/C++ com MPI</li>
+                                        <li>DevOps e infraestrutura: Docker, SSH e protocolos de rede</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-span-12 lg:col-span-6">
+                            <div class="relative flex h-full min-w-0 flex-col rounded-md border border-card bg-surface break-words shadow-bs">
+                                <div class="flex-auto p-4">
+                                    <h3 class="mb-2 text-base leading-[1.2] font-medium">Nível de familiaridade</h3>
+                                    <div class="mb-4">
+                                        <div class="flex justify-between">
+                                            <span>HTML</span><span class="text-sm text-muted">Avançado</span>
+                                        </div>
+                                        <div class="flex h-4 overflow-hidden rounded-md bg-track text-xs" role="progressbar" aria-label="HTML" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100">
+                                            <div class="flex w-[85%] flex-col justify-center overflow-hidden bg-primary text-center whitespace-nowrap text-white"></div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-4">
+                                        <div class="flex justify-between">
+                                            <span>CSS</span><span class="text-sm text-muted">Intermediário-Avançado</span>
+                                        </div>
+                                        <div class="flex h-4 overflow-hidden rounded-md bg-track text-xs" role="progressbar" aria-label="CSS" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100">
+                                            <div class="flex w-[80%] flex-col justify-center overflow-hidden bg-primary text-center whitespace-nowrap text-white"></div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-0">
+                                        <div class="flex justify-between">
+                                            <span>JavaScript</span><span class="text-sm text-muted">Avançado</span>
+                                        </div>
+                                        <div class="flex h-4 overflow-hidden rounded-md bg-track text-xs" role="progressbar" aria-label="JavaScript" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100">
+                                            <div class="flex w-[95%] flex-col justify-center overflow-hidden bg-primary text-center whitespace-nowrap text-white"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Projetos -->
+            <section id="projetos" class="py-6">
+                <div class="mx-auto w-full px-3 sm:max-w-[540px] md:max-w-[720px] lg:max-w-[960px] xl:max-w-[1140px] 2xl:max-w-[1320px]">
+                    <div class="section-title">
+                        <h2 class="mb-1 text-[calc(1.275rem+0.3vw)] leading-[1.2] font-medium xl:text-2xl">Projetos</h2>
+                        <p class="mb-0 text-muted">Alguns trabalhos já desenvolvidos.</p>
+                    </div>
+                    <div class="mt-1 grid grid-cols-12 gap-6">
+                        <div class="col-span-12 md:col-span-6 lg:col-span-4">
+                            <div class="relative flex h-full min-w-0 flex-col rounded-md border border-card bg-surface break-words shadow-bs">
+                                <div class="flex flex-auto flex-col p-4">
+                                    <div class="flex items-start justify-between gap-2">
+                                        <h3 class="mb-1 text-base leading-[1.2] font-medium">Fubika</h3>
+                                        <span class="inline-block rounded-md bg-secondary px-[0.65em] py-[0.35em] text-center align-baseline text-[0.75em] leading-none font-bold whitespace-nowrap text-white">Python</span>
+                                        <span class="inline-block rounded-md bg-secondary px-[0.65em] py-[0.35em] text-center align-baseline text-[0.75em] leading-none font-bold whitespace-nowrap text-white">FastAPI</span>
+                                        <span class="inline-block rounded-md bg-secondary px-[0.65em] py-[0.35em] text-center align-baseline text-[0.75em] leading-none font-bold whitespace-nowrap text-white">Docker</span>
+                                    </div>
+                                    <p class="mb-4 text-sm text-muted">
+                                        Servidor privado de osu! derivado do bancho.py, com foco em estabilidade e desempenho.
+                                    </p>
+                                    <ul class="mb-6 list-disc ps-8 text-sm">
+                                        <li>API em FastAPI com MySQL e cache em Redis</li>
+                                        <li>Deploy containerizado com Docker Compose</li>
+                                        <li>Caddy como proxy reverso e SSL</li>
+                                    </ul>
+                                    <div class="mt-auto flex gap-2">
+                                        <a class="inline-block cursor-pointer rounded-sm border border-primary bg-transparent px-2 py-1 text-center align-middle text-sm font-normal text-primary transition hover:bg-primary hover:text-white" href="https://github.com/henrique117/fubika" target="_blank" rel="noreferrer">
+                                            <i class="fa-brands fa-github me-1"></i>Repositório
+                                        </a>
+                                        <a class="inline-block cursor-pointer rounded-sm border border-primary bg-primary px-2 py-1 text-center align-middle text-sm font-normal text-white transition hover:border-primary-active hover:bg-primary-hover" href="#" target="_blank" rel="noreferrer">
+                                            <i class="fa-solid fa-arrow-up-right-from-square me-1"></i>Demo
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-span-12 md:col-span-6 lg:col-span-4">
+                            <div class="relative flex h-full min-w-0 flex-col rounded-md border border-card bg-surface break-words shadow-bs">
+                                <div class="flex flex-auto flex-col p-4">
+                                    <div class="flex items-start justify-between gap-2">
+                                        <h3 class="mb-1 text-base leading-[1.2] font-medium">kirbyBot</h3>
+                                        <span class="inline-block rounded-md bg-secondary px-[0.65em] py-[0.35em] text-center align-baseline text-[0.75em] leading-none font-bold whitespace-nowrap text-white">TypeScript</span>
+                                        <span class="inline-block rounded-md bg-secondary px-[0.65em] py-[0.35em] text-center align-baseline text-[0.75em] leading-none font-bold whitespace-nowrap text-white">discord.js</span>
+                                        <span class="inline-block rounded-md bg-secondary px-[0.65em] py-[0.35em] text-center align-baseline text-[0.75em] leading-none font-bold whitespace-nowrap text-white">SQLite</span>
+                                    </div>
+                                    <p class="mb-4 text-sm text-muted">
+                                        Bot de Discord escrito em TypeScript, com comandos próprios e dados persistidos localmente.
+                                    </p>
+                                    <ul class="mb-6 list-disc ps-8 text-sm">
+                                        <li>Integração com a API do Discord (discord.js)</li>
+                                        <li>Persistência em SQLite e requisições com Axios</li>
+                                        <li>Hospedagem em container (Docker/Discloud)</li>
+                                    </ul>
+                                    <div class="mt-auto flex gap-2">
+                                        <a class="inline-block cursor-pointer rounded-sm border border-primary bg-transparent px-2 py-1 text-center align-middle text-sm font-normal text-primary transition hover:bg-primary hover:text-white" href="https://github.com/henrique117/kirbyBot" target="_blank" rel="noreferrer">
+                                            <i class="fa-brands fa-github me-1"></i>Repositório
+                                        </a>
+                                        <a class="inline-block cursor-pointer rounded-sm border border-primary bg-primary px-2 py-1 text-center align-middle text-sm font-normal text-white transition hover:border-primary-active hover:bg-primary-hover" href="#" target="_blank" rel="noreferrer">
+                                            <i class="fa-solid fa-arrow-up-right-from-square me-1"></i>Demo
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-span-12 md:col-span-6 lg:col-span-4">
+                            <div class="relative flex h-full min-w-0 flex-col rounded-md border border-card bg-surface break-words shadow-bs">
+                                <div class="flex flex-auto flex-col p-4">
+                                    <div class="flex items-start justify-between gap-2">
+                                        <h3 class="mb-1 text-base leading-[1.2] font-medium">Desafio CA Full-stack</h3>
+                                        <span class="inline-block rounded-md bg-secondary px-[0.65em] py-[0.35em] text-center align-baseline text-[0.75em] leading-none font-bold whitespace-nowrap text-white">Full-stack</span>
+                                    </div>
+                                    <p class="mb-4 text-sm text-muted">
+                                        Aplicação full-stack feita como desafio técnico, dividida em API e front-end.
+                                    </p>
+                                    <ul class="mb-6 list-disc ps-8 text-sm">
+                                        <li>Back-end em NestJS + TypeScript</li>
+                                        <li>Front-end em React + Tailwind CSS</li>
+                                        <li>Integração com a API REST via Axios</li>
+                                    </ul>
+                                    <div class="mt-auto flex gap-2">
+                                        <a class="inline-block cursor-pointer rounded-sm border border-primary bg-transparent px-2 py-1 text-center align-middle text-sm font-normal text-primary transition hover:bg-primary hover:text-white" href="https://github.com/henrique117/desafio-ca-fullstack" target="_blank" rel="noreferrer">
+                                            <i class="fa-brands fa-github me-1"></i>Repositório
+                                        </a>
+                                        <a class="inline-block cursor-pointer rounded-sm border border-primary bg-primary px-2 py-1 text-center align-middle text-sm font-normal text-white transition hover:border-primary-active hover:bg-primary-hover" href="#" target="_blank" rel="noreferrer">
+                                            <i class="fa-solid fa-arrow-up-right-from-square me-1"></i>Demo
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Interesses -->
+            <section id="interesses" class="py-6">
+                <div class="mx-auto w-full px-3 sm:max-w-[540px] md:max-w-[720px] lg:max-w-[960px] xl:max-w-[1140px] 2xl:max-w-[1320px]">
+                    <div class="section-title">
+                        <h2 class="mb-1 text-[calc(1.275rem+0.3vw)] leading-[1.2] font-medium xl:text-2xl">Interesses</h2>
+                        <p class="mb-0 text-muted">Áreas que eu gosto de estudar/pesquisar.</p>
+                    </div>
+                    <div class="mt-1 grid grid-cols-12 gap-6">
+                        <div class="col-span-12 lg:col-span-6">
+                            <div class="relative flex h-full min-w-0 flex-col rounded-md border border-card bg-surface break-words shadow-bs">
+                                <div class="flex-auto p-4">
+                                    <ul class="mb-0 list-disc ps-8">
+                                    <li>Programação para Sistemas Operacionais</li>
+                                    <li>Programação de baixo nível e desempenho</li>
+                                    <li>Computação paralela e distribuída (MPI)</li>
+                                    <li>Desenvolvimento Web (Front-end e Back-end)</li>
+                                    <li>Desenvolvimento de jogos</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-span-12 lg:col-span-6">
+                            <div class="relative flex h-full min-w-0 flex-col rounded-md border border-card bg-surface break-words shadow-bs">
+                                <div class="flex-auto p-4">
+                                    <h3 class="mb-2 text-base leading-[1.2] font-medium">Atividades</h3>
+                                    <p class="mb-2 text-muted">
+                                        Participo de projetos acadêmicos e pessoais, e gosto de aprender construindo coisas do zero.
+                                    </p>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="inline-block rounded-md border border-line bg-light px-[0.65em] py-[0.35em] text-center align-baseline text-[0.75em] leading-none font-bold whitespace-nowrap text-black"><i class="fa-solid fa-book me-1"></i>Estudos</span>
+                                        <span class="inline-block rounded-md border border-line bg-light px-[0.65em] py-[0.35em] text-center align-baseline text-[0.75em] leading-none font-bold whitespace-nowrap text-black"><i class="fa-solid fa-people-group me-1"></i>Trabalho em equipe</span>
+                                        <span class="inline-block rounded-md border border-line bg-light px-[0.65em] py-[0.35em] text-center align-baseline text-[0.75em] leading-none font-bold whitespace-nowrap text-black"><i class="fa-solid fa-terminal me-1"></i>Projetos práticos</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Contato -->
+            <section id="contato" class="py-6">
+                <div class="mx-auto w-full px-3 sm:max-w-[540px] md:max-w-[720px] lg:max-w-[960px] xl:max-w-[1140px] 2xl:max-w-[1320px]">
+                    <div class="section-title">
+                        <h2 class="mb-1 text-[calc(1.275rem+0.3vw)] leading-[1.2] font-medium xl:text-2xl">Contato</h2>
+                        <p class="mb-0 text-muted">Como falar comigo.</p>
+                    </div>
+                    <div class="mt-1 grid grid-cols-12 gap-6">
+                        <div class="col-span-12 lg:col-span-6">
+                            <div class="relative flex min-w-0 flex-col rounded-md border border-card bg-surface break-words shadow-bs">
+                                <div class="flex-auto p-4">
+                                    <ul class="mb-0">
+                                        <li class="mb-2 flex items-center gap-2">
+                                            <i class="fa-solid fa-envelope text-primary"></i>
+                                            <span>hassis.moreira117@gmail.com</span>
+                                        </li>
+                                        <li class="mb-2 flex items-center gap-2">
+                                            <i class="fa-brands fa-github text-primary"></i>
+                                            <a class="text-link no-underline hover:text-link-hover" href="https://github.com/henrique117" target="_blank" rel="noreferrer">
+                                                github.com/henrique117
+                                            </a>
+                                        </li>
+                                        <li class="flex items-center gap-2">
+                                            <i class="fa-brands fa-linkedin text-primary"></i>
+                                            <a class="text-link no-underline hover:text-link-hover" href="https://www.linkedin.com/in/henrique-moreira-274b8027b/" target="_blank" rel="noreferrer">
+                                                linkedin.com/in/henrique-moreira
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-span-12 lg:col-span-6">
+                            <div class="relative flex min-w-0 flex-col rounded-md border border-card bg-surface break-words shadow-bs">
+                                <div class="flex-auto p-4">
+                                    <ul class="mb-0">
+                                        <li class="mb-2 flex items-center gap-2">
+                                            <i class="fa-brands fa-github text-primary"></i>
+                                            <a class="text-link no-underline hover:text-link-hover" href="https://github.com/henrique117/fubika" target="_blank" rel="noreferrer">
+                                                github.com/henrique117/fubika
+                                            </a>
+                                        </li>
+                                        <li class="mb-2 flex items-center gap-2">
+                                            <i class="fa-brands fa-github text-primary"></i>
+                                            <a class="text-link no-underline hover:text-link-hover" href="https://github.com/henrique117/kirbyBot" target="_blank" rel="noreferrer">
+                                                github.com/henrique117/kirbyBot
+                                            </a>
+                                        </li>
+                                        <li class="flex items-center gap-2">
+                                            <i class="fa-brands fa-github text-primary"></i>
+                                            <a class="text-link no-underline hover:text-link-hover" href="https://github.com/henrique117/desafio-ca-fullstack" target="_blank" rel="noreferrer">
+                                                github.com/henrique117/desafio-ca-fullstack
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Rodapé da Página -->
+        <footer class="border-t border-line py-6">
+            <div class="mx-auto flex w-full flex-col justify-between gap-2 px-3 sm:max-w-[540px] md:max-w-[720px] md:flex-row lg:max-w-[960px] xl:max-w-[1140px] 2xl:max-w-[1320px]">
+                <small class="text-[0.875em] text-muted">© <span id="year"></span> Página Pessoal — Henrique Assis Moreira</small>
+                <small class="text-[0.875em] text-muted">Feito com HTML + Tailwind + um pouco de CSS/JS</small>
+            </div>
+        </footer>
+
+        <!-- JS do projeto -->
+        <script src="assets/js/script.js"></script>
+    </body>
+</html>
